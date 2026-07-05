@@ -4,8 +4,7 @@ import type { BlogPost } from "@/collections/blog"
 import { getBlogPostSlug } from "@/utils/url"
 
 
-// TODO : fix this site url  
-const SITE_URL = new URL("https://beta.amruthpillai.com")
+const SITE_URL = new URL("https://aaryanan.vercel.app")
 
 export const site = {
   name: "Aryan Kaushik",
