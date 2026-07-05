@@ -1,0 +1,10 @@
+node_modules/
+coverage/
+.agents/
+.claude/
+.wrangler/
+worker-configuration.d.ts
+.pnpm-store/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock

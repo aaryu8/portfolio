@@ -1,0 +1,64 @@
+---
+import { ChevronDownIcon } from "@lucide/astro"
+import { render } from "astro:content"
+
+import type { Experience } from "@/collections/experience"
+import { formatMonthYear } from "@/utils/date"
+
+interface Props {
+  experience: Experience
+}
+
+const { experience } = Astro.props
+const { Content } = await render(experience)
+
+const formatExperienceRange = (startDate: Date, endDate?: Date) => {
+  if (!endDate) return `${formatMonthYear(startDate)} — Present`
+  return `${formatMonthYear(startDate)} — ${formatMonthYear(endDate)}`
+}
+---
+
+<article class="border-t py-6 first:border-t-0 first:pt-0 last:pb-0">
+  <button
+    type="button"
+    class="experience-toggle flex w-full items-start justify-between gap-4 text-left"
+    aria-expanded="false"
+  >
+    <div class="space-y-0.5">
+      <h3 class="text-lg font-semibold tracking-tight">{experience.data.position}</h3>
+      <p class="text-sm text-muted">{experience.data.company} · {experience.data.location}</p>
+    </div>
+    <div class="flex shrink-0 items-center gap-2">
+      <time class="text-sm text-muted italic">
+        {formatExperienceRange(experience.data.startDate, experience.data.endDate)}
+      </time>
+      <ChevronDownIcon size={16} class="chevron shrink-0 transition-transform duration-200" />
+    </div>
+  </button>
+
+  <div class="experience-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+    <div class="prose prose-sm dark:prose-invert max-w-prose pt-3 leading-relaxed">
+      <Content />
+    </div>
+  </div>
+</article>
+
+<script>
+  document.querySelectorAll(".experience-toggle").forEach((button) => {
+    button.addEventListener("click", () => {
+      const content = button.nextElementSibling as HTMLElement
+      const chevron = button.querySelector(".chevron") as HTMLElement
+      const isOpen = button.getAttribute("aria-expanded") === "true"
+
+      if (isOpen) {
+        content.style.maxHeight = "0px"
+        button.setAttribute("aria-expanded", "false")
+        chevron.style.transform = "rotate(0deg)"
+      } else {
+        content.style.maxHeight = `${content.scrollHeight}px`
+        button.setAttribute("aria-expanded", "true")
+        chevron.style.transform = "rotate(180deg)"
+      }
+    })
+  })
+</script>
