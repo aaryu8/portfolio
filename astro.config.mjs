@@ -11,7 +11,7 @@ import tsconfigPaths from "vite-tsconfig-paths"
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://amruthpillai.com",
+  site: "https://aaryanan.vercel.app/",
 
   integrations: [react(), expressiveCode(), mdx(), sitemap()],
 
